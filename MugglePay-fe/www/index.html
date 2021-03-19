@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script type="text/javascript" src="./resource/react.development.js"></script>
+    <script type="text/javascript" src="./resource/react-dom.development.js"></script>
+    <script type="text/javascript" src="./resource/babel.min.js"></script>
+    <script src="./resource/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      class MyComp extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            priceNum: "",
+          };
+        }
+        componentDidMount(){
+        axios
+            .get("https://api.mugglepay.com/api/usdt")
+            .then((dat) => {
+            //   console.log(dat.data);
+              this.setState({
+                priceNum: dat.data.price
+              });
+            });
+        }
+        render() {
+          return (
+            <div>
+              <div>Hello World</div>
+              <div>
+                <p style={{color:'#ddd'}}>1 USDT is roughly</p>
+                <p style={{fontWeight:'bold'}}>{ this.state.priceNum } CNY</p>
+              </div>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<MyComp />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
